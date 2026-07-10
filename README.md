@@ -1,5 +1,8 @@
 # Revenue Leakage Agent
 
+
+![Extract Data](doc/logo.png)
+
 A conversational AI agent that investigates billing anomalies between contracts (billing plans) and invoices, proposes corrective actions, and applies fixes to a sandbox environment — only after human approval.
 
 Built for SaaS revenue operations teams who need to detect missed billing, FX overbilling, amount mismatches, and orphan invoices without manually cross-referencing spreadsheets.
