@@ -20,5 +20,16 @@
     "currency": "USD",
     "status": "unpaid",
     "description": "Make-good: Underbilling on invoice I-9110 (issue date 2025-06-10) for Globex Ltd. Billed $20,000.00 USD vs expected $22,500.00 USD per period. Variance: $2,500.00 USD."
+  },
+  {
+    "invoice_id": "INV-MG-96400B",
+    "plan_id": "C-1010",
+    "customer_name": "Initech",
+    "issue_date": "2025-09-05",
+    "due_date": "2025-09-20",
+    "amount_invoiced": 20000.0,
+    "currency": "USD",
+    "status": "unpaid",
+    "description": "Make-good: Make-good for underbilling on annual invoice I-9201 (Initech, plan C-1010): billed $100,000.00 vs expected plan total $120,000.00, variance $20,000.00."
   }
 ]

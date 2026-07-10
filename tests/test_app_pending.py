@@ -5,6 +5,7 @@ from revenue_leakage_agent.ui_pending import (
     extract_pending_from_tool_trace,
     is_approval_message,
     resolve_pending_action,
+    sanitize_pending_action,
 )
 
 
@@ -29,6 +30,46 @@ def test_resolve_pending_action_suppresses_chain_after_apply() -> None:
     ]
     user_input = 'Yes, apply this action: {"action_id": "ACT-123"}'
     assert resolve_pending_action(tool_trace, user_input) is None
+
+
+def test_resolve_pending_action_clears_on_duplicate_approval_without_apply() -> None:
+    """Re-approving an already-applied draft must not re-queue the pending bar."""
+    tool_trace = [
+        {
+            "tool": "propose_make_good_invoice",
+            "result": (
+                '{"action_id": "ACT-79A1D880", "action_type": "make_good_invoice", '
+                '"payload": {"plan_id": "C-1007", "amount": 2500.0}}'
+            ),
+        },
+    ]
+    user_input = (
+        'Yes, apply this action: {"action_id": "ACT-79A1D880", '
+        '"action_type": "make_good_invoice", "payload": {"plan_id": "C-1007"}}'
+    )
+    assert resolve_pending_action(tool_trace, user_input, {"ACT-79A1D880"}) is None
+
+
+def test_sanitize_pending_action_drops_applied_ids() -> None:
+    pending = {
+        "action_id": "ACT-79A1D880",
+        "action_type": "make_good_invoice",
+        "payload": {"plan_id": "C-1007"},
+    }
+
+    class _Audit:
+        @staticmethod
+        def load() -> list[dict[str, str]]:
+            return [{"action_id": "ACT-79A1D880"}]
+
+    from revenue_leakage_agent import ui_pending
+
+    original = ui_pending.load_applied_action_ids
+    ui_pending.load_applied_action_ids = lambda: {"ACT-79A1D880"}
+    try:
+        assert sanitize_pending_action(pending) is None
+    finally:
+        ui_pending.load_applied_action_ids = original
 
 
 def test_resolve_pending_action_keeps_investigation_proposal() -> None:

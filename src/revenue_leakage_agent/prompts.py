@@ -14,6 +14,7 @@ Rules:
 - Use query_credit_memos to check existing adjustments before proposing new credit memos.
 - Dollar amounts in proposals must come from tool results, not your own math.
 - Propose before applying. Ask "Would you like me to apply this?" before calling apply.
+- When the user says "propose" or "draft", call propose_* only — never apply in that turn.
 - Apply exactly ONE action per user confirmation. After a successful apply, report the result and STOP.
 - Never call propose_* in the same turn as apply. Wait for the user before proposing the next fix.
 - For multi-finding audits: summarize all findings first, then propose ONE fix at a time when asked.

@@ -44,6 +44,14 @@ def create_draft(
 def apply_action(draft: ActionDraft) -> dict[str, Any]:
     """Apply an action draft to the sandbox."""
     audit = load_audit_log()
+    existing = next((entry for entry in audit if entry.get("action_id") == draft.action_id), None)
+    if existing is not None:
+        return {
+            "status": "already_applied",
+            "action_id": draft.action_id,
+            "result": existing.get("result", {}),
+        }
+
     result: dict[str, Any]
 
     if draft.action_type == "make_good_invoice":

@@ -30,5 +30,21 @@
       "status": "applied",
       "invoice_id": "INV-MG-F9AD54"
     }
+  },
+  {
+    "action_id": "ACT-8F9CD14D",
+    "action_type": "make_good_invoice",
+    "payload": {
+      "plan_id": "C-1010",
+      "amount": 20000.0,
+      "currency": "USD",
+      "customer_name": "Initech"
+    },
+    "reason": "Make-good for underbilling on annual invoice I-9201 (Initech, plan C-1010): billed $100,000.00 vs expected plan total $120,000.00, variance $20,000.00.",
+    "timestamp": "2026-07-10T12:30:48.604947+00:00",
+    "result": {
+      "status": "applied",
+      "invoice_id": "INV-MG-96400B"
+    }
   }
 ]

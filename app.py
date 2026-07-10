@@ -12,7 +12,11 @@ from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from revenue_leakage_agent.graph import build_graph
 from revenue_leakage_agent.llm import get_llm
 from revenue_leakage_agent.tool_call_parser import looks_like_text_tool_calls, strip_thinking_tags
-from revenue_leakage_agent.ui_pending import is_approval_message, resolve_pending_action
+from revenue_leakage_agent.ui_pending import (
+    is_approval_message,
+    resolve_pending_action,
+    sanitize_pending_action,
+)
 
 
 def _init_session() -> None:
@@ -96,7 +100,7 @@ def _render_tool_trace_ui(tool_trace: list[dict[str, Any]]) -> None:
         return
 
     label = f"Tool activity ({len(tool_trace)} call{'s' if len(tool_trace) != 1 else ''})"
-    with st.expander(label, expanded=True):
+    with st.expander(label, expanded=False):
         for index, step in enumerate(tool_trace, start=1):
             st.markdown(f"**{index}. `{step['tool']}`**")
             if step.get("args"):
@@ -207,6 +211,11 @@ def main() -> None:
                 _render_tool_trace_ui(entry["tool_trace"])
 
     if st.session_state.pending_action:
+        st.session_state.pending_action = sanitize_pending_action(
+            st.session_state.pending_action
+        )
+
+    if st.session_state.pending_action:
         pending = st.session_state.pending_action
         st.info(
             f"Pending proposal **{pending.get('action_id', '')}** "
@@ -288,7 +297,7 @@ def _run_agent(user_input: str) -> None:
         }
     )
 
-    pending = resolve_pending_action(tool_trace, user_input)
+    pending = sanitize_pending_action(resolve_pending_action(tool_trace, user_input))
     st.session_state.pending_action = pending
 
     st.rerun()
