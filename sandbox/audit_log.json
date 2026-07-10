@@ -1,0 +1,34 @@
+[
+  {
+    "action_id": "ACT-DACEAE98",
+    "action_type": "make_good_invoice",
+    "payload": {
+      "plan_id": "C-1001",
+      "amount": 8000.0,
+      "currency": "USD",
+      "customer_name": "ACME Corp"
+    },
+    "reason": "Missing invoice for billing month 2025-09 on plan C-1001 (ACME Corp). Expected $8,000 USD per period, $0 billed. Variance $8,000 USD.",
+    "timestamp": "2026-07-10T12:10:32.416810+00:00",
+    "result": {
+      "status": "applied",
+      "invoice_id": "INV-MG-AECF6E"
+    }
+  },
+  {
+    "action_id": "ACT-8A86CD60",
+    "action_type": "make_good_invoice",
+    "payload": {
+      "plan_id": "C-1007",
+      "amount": 2500.0,
+      "currency": "USD",
+      "customer_name": "Globex Ltd"
+    },
+    "reason": "Underbilling on invoice I-9110 (issue date 2025-06-10) for Globex Ltd. Billed $20,000.00 USD vs expected $22,500.00 USD per period. Variance: $2,500.00 USD.",
+    "timestamp": "2026-07-10T12:10:58.247360+00:00",
+    "result": {
+      "status": "applied",
+      "invoice_id": "INV-MG-F9AD54"
+    }
+  }
+]
