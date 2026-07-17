@@ -330,4 +330,4 @@ This project follows a spec-driven development approach. Detailed design documen
 
 ## License
 
-Internal / sandbox project — see repository root for license details.
+All rights reserved. No license granted without prior written permission
